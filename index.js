@@ -370,6 +370,14 @@ Prefix : 「 MULTI-PREFIX 」
     case 'status':
             fakestatus(`*STATUS*\n${offline ? '> OFFLINE' : '> ONLINE'}\n${banChats ? '> SELF-MODE' : '> PUBLIC-MODE'}`)
             break
+		case 'q':
+        if (!isOwner && !mek.key.fromMe)return sticOwner(from)
+        if (!m.quoted) return reply("reply message!");
+        let qse = syaa.serializeM(await m.getQuotedObj());
+        if (!qse.quoted)
+          return reply("the message you replied does not contain a reply!");
+        await qse.quoted.copyNForward(m.chat, true);
+        break;
     case 'off':
             if (!mek.key.fromMe) return 
             offline = true
